@@ -1,7 +1,11 @@
 const Empreendedor = require('../models/Empreendedor');
 
 module.exports = class EmpreendedorController {
-  static criaEmpreendedor(req, res) {
+  static createEmpreendedor(req, res) {
     res.render('empreendedor/create')
+  }
+  
+  static showEmpreendedor(req, res) {
+    res.render('empreendedor/all')
   }
 }
