@@ -9,7 +9,7 @@ const Empreendedor = require('./models/Empreendedor');
 const Usuario = require('./models/Usuario');
 
 // routes
-
+const cadastroUsuarioRoutes = require('./routes/cadastroUsuarioRoutes');
 
 // template engine
 app.engine('handlebars', exphbs.engine());
@@ -26,9 +26,20 @@ app.use(express.json());
 // public path
 app.use(express.static('public'));
 
+// rotas
+// app.get('/usuario/cadastro', (req, res) => {
+//   res.render('cadastro');
+// });
+
+app.get('/cadastro', cadastroUsuarioRoutes);
+
 // app.use Routes
 app.get('/', (req, res) => {
-  res.render('home');
+  res.render('layouts/main');
+})
+
+app.get('/home', (req, res) => {
+  res.render('home')
 })
 
 

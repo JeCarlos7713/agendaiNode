@@ -1,0 +1,64 @@
+<head>
+  <title>Agendai - Cadastro</title>
+  <link rel="stylesheet" href="/css/registerPage/main.css">
+</head>
+
+  <section id="register-page">
+    <div class="wrapper">
+      <div class="container">
+        <div class="aside dark">
+          <img src="/img/Login&Register/login-image.svg" alt="Imagem criação de conta">
+        </div>
+
+        <main class="main">
+          <h3 class="title">Resgistre-se</h3>
+          <div class="register-container">
+
+            <form action="/usuario/cadastrar" method="POST" class="form-register">
+              <div class="user-details">
+                <div class="wrap">
+                  <label for="nome"><p>Nome</p></label>
+                  <input type="text" name="nome" id="">
+
+                  <label for="cell"><p>Celular</p></label>
+                  <input type="number" name="cell" id="">
+
+                  <label for="pass"><p>Senha</p></label>
+                  <input type="password" name="pass" id="">
+                </div>
+
+                <div class="wrap">
+                  <label for="sbr_nome"><p>Sobrenome</p></label>
+                  <input type="text" name="sbr_nome">
+
+                  <label for="email"><p>Email</p></label>
+                  <input type="email" name="email" id="">
+
+                  <label for="confirm_pass"><p>Confirmar senha</p></label>
+                  <input type="password" name="confirm_pass">
+                </div>
+              </div>
+
+              <div class="submit">
+                <div class="register-btn">
+                  <input type="submit" class="register-submit btn btn-blue " value="Registrar"></input>
+                </div>
+
+                <div class="checkbox">
+                  <input type="checkbox" name="empreendedor" id="">
+                  <label for="empreendedor">Criar como empreendedor</label>
+                </div>
+              </div>
+
+              <div class="login-google">
+                <span>ou</span>
+
+                <button type="submit" class="btn-google btn btn-login-transparent"><i class="bi bi-google" aria-label="google"
+                    style="color: #FBBC05"></i>Login com Google</button>
+              </div>
+            </form>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
