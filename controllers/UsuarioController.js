@@ -1,7 +1,5 @@
 const Usuario = require('../models/Usuario');
 
-module.exports = class UsuarioController {
-  static cadastraUsuario(req, res) {
-    res.render('cadastro');
-  }
+module.exports = app => {
+  app.get('/cadastro', (req, res) => res.send('voce esta aqui'))
 };

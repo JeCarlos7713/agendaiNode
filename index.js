@@ -1,7 +1,11 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const app = express();
+const consign = require('consign');
 const port = 8080;
+
+const app = express();
+
+consign().include('controllers').into(app)
 
 // models
 const conn = require('./db/conn');
