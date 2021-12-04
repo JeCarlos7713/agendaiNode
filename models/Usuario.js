@@ -13,34 +13,31 @@ const Usuario = db.define('Usuario', {
     type: DataTypes.STRING,
     allowNull: false,
     required: true,
-    primaryKey: true,
   },
   sobrenome: {
     type: DataTypes.STRING,
     allowNull: false,
     required: true,
-    primaryKey: true,
   },
   email: {
     type: DataTypes.STRING(100),
     allowNull: false,
     required: true,
-    primaryKey: true,
   },
   celular: {
-    type: DataTypes.BIGINT(14),
+    type: DataTypes.STRING,
     allowNull: false,
     required: true,
-    primaryKey: true,
   },
   senha: {
     type: DataTypes.STRING,
     allowNull: false,
     required: true,
-    primaryKey: true,
   },
   empreendedor: {
     type: DataTypes.BOOLEAN,
+    allowNull: false,
+    required: false,
   }
 });
 

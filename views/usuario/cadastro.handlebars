@@ -1,5 +1,4 @@
 <head>
-  <title>Agendai - Cadastro</title>
   <link rel="stylesheet" href="/css/registerPage/main.css">
 </head>
 
@@ -14,25 +13,25 @@
           <h3 class="title">Resgistre-se</h3>
           <div class="register-container">
 
-            <form action="/usuario/cadastrar" method="POST" class="form-register">
+            <form action="/usuario/cadastro" method="POST" class="form-register">
               <div class="user-details">
                 <div class="wrap">
                   <label for="nome"><p>Nome</p></label>
-                  <input type="text" name="nome" id="">
+                  <input type="text" name="nome">
 
-                  <label for="cell"><p>Celular</p></label>
-                  <input type="number" name="cell" id="">
+                  <label for="celular"><p>Celular</p></label>
+                  <input type="text" name="celular">
 
-                  <label for="pass"><p>Senha</p></label>
-                  <input type="password" name="pass" id="">
+                  <label for="senha"><p>Senha</p></label>
+                  <input type="password" name="senha">
                 </div>
 
                 <div class="wrap">
-                  <label for="sbr_nome"><p>Sobrenome</p></label>
-                  <input type="text" name="sbr_nome">
+                  <label for="sobrenome"><p>Sobrenome</p></label>
+                  <input type="text" name="sobrenome">
 
                   <label for="email"><p>Email</p></label>
-                  <input type="email" name="email" id="">
+                  <input type="email" name="email">
 
                   <label for="confirm_pass"><p>Confirmar senha</p></label>
                   <input type="password" name="confirm_pass">
@@ -45,7 +44,7 @@
                 </div>
 
                 <div class="checkbox">
-                  <input type="checkbox" name="empreendedor" id="">
+                  <input type="checkbox" name="empreendedor">
                   <label for="empreendedor">Criar como empreendedor</label>
                 </div>
               </div>
