@@ -1,9 +1,8 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const port = 8080;
+const port = 3000;
 
 const app = express();
-
 
 // models
 const conn = require('./db/conn');
@@ -33,14 +32,13 @@ app.use('/usuario', cadastroUsuarioRoutes);
 // app.use Routes
 app.get('/', (req, res) => {
   res.render('layouts/main');
-})
+});
 
-
-
-conn.sync({ alter: true })
-    .then(() => {
-      app.listen(port, () => {
-        console.log(`Servidor iniciado com sucesso: http://localhost:${port}`)
-      });
-})
-.catch((err) => console.log(`Erro: ${err}`))
+conn
+  .sync({ alter: true })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Servidor iniciado com sucesso: http://localhost:${port}`);
+    });
+  })
+  .catch((err) => console.log(`Erro: ${err}`));
