@@ -1,0 +1,35 @@
+window.addEventListener('load', function () {
+  // eslint-disable-next-line no-undef
+  new Glider(document.querySelector('.glider'), {
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dragVelocity: 1.0,
+    draggable: true,
+    dots: '.dots',
+    arrows: {
+      prev: '.glider-prev',
+      next: '.glider-next'
+    },
+    scrollLock: true,
+    responsive: [
+      {
+        breakpoint: 550,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1
+        },
+        arrows: {
+          prev: '.glider-prev',
+          next: '.glider-next'
+        }
+      }
+    ]
+  });
+});

@@ -1,21 +1,25 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const port = 8080;
-
+const port = 3000;
 const app = express();
-
 
 // models
 const conn = require('./db/conn');
-// const Empreendedor = require('./models/Empreendedor');
+
+// eslint-disable-next-line no-unused-vars
 const Usuario = require('./models/Usuario');
+
+
+app.engine('handlebars', exphbs.engine(
+  { defaultLayout: 'main' },
+  {partialsDir: 'views/partials'},
+  ));
+app.set('view engine', 'handlebars');
+app.use(express.json());
+app.use(express.static('public'));
 
 // routes
 const cadastroUsuarioRoutes = require('./routes/cadastroUsuarioRoutes');
-
-// template engine
-app.engine('handlebars', exphbs.engine());
-app.set('view engine', 'handlebars');
 
 // receber resposta do body
 app.use(
@@ -24,23 +28,18 @@ app.use(
   })
 );
 
-app.use(express.json());
-// public path
-app.use(express.static('public'));
+// app.use Routes
+app.get('/', (req, res) => {
+  res.render('home');
+});
 
 app.use('/usuario', cadastroUsuarioRoutes);
 
-// app.use Routes
-app.get('/', (req, res) => {
-  res.render('layouts/main');
-})
-
-
-
-conn.sync({ alter: true })
-    .then(() => {
-      app.listen(port, () => {
-        console.log(`Servidor iniciado com sucesso: http://localhost:${port}`)
-      });
-})
-.catch((err) => console.log(`Erro: ${err}`))
+conn
+  .sync({ alter: true })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Servidor iniciado com sucesso: http://localhost:${port}`);
+    });
+  })
+  .catch((err) => console.log(`Erro: ${err}`));

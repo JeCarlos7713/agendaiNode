@@ -2,6 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Quicksand:wght@400;500&display=swap');
 /* Fontes */
 
+/* icons */
+/* @import url('https://css.gg/css');
+@import url('https://unpkg.com/css.gg/icons/all.css');
+@import url('https://cdn.jsdelivr.net/npm/css.gg/icons/all.css'); */
+/* icons */
+
 /* Variaveis */
 :root {
   --max-site-width: 988px;
@@ -10,10 +16,12 @@
   --bg-light: #FCFCFC;
   --bg-dark: #282828;
   --bg-input: #E7E7E7;
+  --bg-navbar: #313131;
 
   --text-light: #FFF;
   --text-dark: #282828;
   --text-placeholder-light: #F1F1F1;
+  --text-blue: #58AFC4;
 
   --btn-bg-blue: #58AFC4;
   --btn-border-transparent: #F2F2F2;
@@ -64,7 +72,7 @@ h2 {
 
   font-family: 'Montserrat', 'helvetica', sans-serif;
   font-weight: 700;
-  font-size: 4.8rem;
+  font-size: 3.8rem;
 }
 /* Reset */
 
@@ -175,7 +183,7 @@ h2 {
     transition: .5s;
   }
 
-  .header .wrapper .search-btn .bi-search{
+  .header .wrapper .search-btn .ri-search-line {
     color: var(--text-dark);
     font-size: 20px;
   }
@@ -186,17 +194,37 @@ h2 {
     transition: .5s;
   }
 
-  .header .wrapper .search-box:focus, .search-box:hover > .search-btn i{
+  .header .wrapper .search-box:focus, .search-box:hover > .search-btn{
     background: var(--bg-light);
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+    justify-content: center; 
+    border-radius: 50%; 
     transition: .3s;
   }
 /* Header */
+
+  /* Navbar */
+  .navbar {
+    background: var(--bg-navbar);
+    padding: 5px 0;
+    border-top: 1px solid rgba(88, 175, 196, 0.2);
+  }
+
+  .navbar .wrapper ul {
+    display: flex;
+    justify-content: space-between;
+  }
+  .navbar .wrapper ul li a {
+    color: var(--text-light);
+    font-size: 1.6rem;
+    font-weight: 600;
+    display: block;
+    padding: 5px;
+  }
+  /* Navbar */
 
 /* Hamburguer */
 #hamburguer {
@@ -215,8 +243,8 @@ h2 {
     height: 0;
     top: 68px;
     right: 0;
-    background: black;
-    z-index: 2;
+    background: var(--bg-dark);
+    z-index: 1;
     padding: var(--padding-default);
     transition: .5s;
     visibility: hidden;
@@ -237,6 +265,59 @@ h2 {
 
   .header .wrapper .menu .search-box {
     display: none;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .navbar .wrapper .listNav{
+    display: none;
+  }
+
+  .navbar.active {
+    display: block;
+  }
+
+  .navbar .wrapper .listNav{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 0;
+    top: 68px;
+    right: 0;
+    z-index: 1;
+    padding: var(--padding-default);
+    transition: .5s;
+    visibility: hidden;
+    overflow-y: hidden;
+  }
+
+  .navbar .wrapper .listNav.active {
+    height: calc(100vh - 68px);
+    visibility: visible;
+    overflow-y: auto;
+    transition: .5s;
+  }
+
+   .listNav li a{
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px !important;
+  }  
+
+  .navbar .listNav::after, .navbar .listNav li::before {
+    content: '';
+    display: block;
+    height: 1px;
+    margin: 20px 0;
+    background: rgba(88, 175, 196, 0.2);;
+    margin: 10px 0;
+    position: relative;
+    transition: .5s;
+  }
+  .navbar .listNav::after {
+    margin: 20px 0;
   }
 
   #hamburguer {
@@ -265,6 +346,7 @@ h2 {
     transition: .5s;
   }
 
+
   #hamburguer .line.active {
     border-top-color: transparent;
     transition: .2s;
@@ -291,28 +373,35 @@ h2 {
     transition: 0.5s;
     margin-top: 100vh;
   }
+}
 /* Hamburguer */
 
 /* Footer */
 .footer .wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   font-size: 3.2rem;
   height: 40vh;
   padding: var(--padding-default);
 }
+
 .footer .wrapper a {
   color: var(--text-light);
   font-weight: 600;
 }
 /* Footer */
 
+/* Responsividade */
 @media only screen and (max-width: 600px) {
-  html {
-    font-size: 30%;
-  }
-
   .footer .wrapper {
     grid-template-columns: repeat(2, 1fr);
+    place-items: center;
   }
 }
+
+@media only screen and (max-width: 450px) {
+  .footer .wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+/* Responsividade */

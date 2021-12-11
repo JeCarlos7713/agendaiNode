@@ -1,4 +1,4 @@
-const { DataTypes } =  require('sequelize');
+const { DataTypes } = require('sequelize');
 const db = require('../db/conn');
 
 const Usuario = db.define('Usuario', {
@@ -7,37 +7,37 @@ const Usuario = db.define('Usuario', {
     allowNull: false,
     autoIncrement: true,
     required: true,
-    primaryKey: true,
+    primaryKey: true
   },
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
-    required: true,
+    required: true
   },
   sobrenome: {
     type: DataTypes.STRING,
     allowNull: false,
-    required: true,
+    required: true
   },
   email: {
     type: DataTypes.STRING(100),
     allowNull: false,
-    required: true,
+    required: true
   },
   celular: {
     type: DataTypes.STRING,
     allowNull: false,
-    required: true,
+    required: true
   },
   senha: {
     type: DataTypes.STRING,
     allowNull: false,
-    required: true,
+    required: true
   },
   empreendedor: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    required: false,
+    required: false
   }
 });
 
