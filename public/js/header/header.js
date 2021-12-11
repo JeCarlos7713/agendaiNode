@@ -1,4 +1,4 @@
-const hamburguer =  document.getElementById('hamburguer');
+const hamburguer = document.getElementById('hamburguer');
 const menu = document.querySelector('.menu');
 const line = document.querySelector('.line');
 const navbar = document.querySelector('.navbar');
