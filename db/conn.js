@@ -1,6 +1,10 @@
-const { Sequelize } = require('sequelize');
-const configDB = require('../config/database');
+const mongoose = require('mongoose');
 
-const sequelize = new Sequelize(configDB);
+async function main() {
+  await mongoose.connect('mongodb://localhost:27017/agendai');
+  console.log('Conectou ao MongoDB com mongoose');
+}
 
-module.exports = sequelize;
+main().catch((err) => console.log(err));
+
+module.exports = mongoose;
