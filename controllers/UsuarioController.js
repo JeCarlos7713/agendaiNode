@@ -75,6 +75,27 @@ module.exports = class UsuarioController {
 
     // Criacao da senha
     const salt = await bcrypt.genSalt(12);
+    const passwordHash = await bcrypt.hash(senha, salt);
+
+    // Criacao do usuario
+    const user = new Usuario({
+      nome,
+      sobrenome,
+      email,
+      celular,
+      senha: passwordHash,
+      empreendedor
+    });
+
+    try {
+      const newUser = await user.save();
+      res.status(201).json({
+        message: 'Usuario criado!',
+        newUser
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
 
     await Usuario.create(usuarioCriado);
 
