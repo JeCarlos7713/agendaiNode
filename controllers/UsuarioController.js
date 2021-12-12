@@ -63,6 +63,7 @@ module.exports = class UsuarioController {
       return;
     }
 
+    // Verifica se o usuario ja existe
     let userFind = await Usuario.findOne({ where: { email: req.body.email } });
 
     if (userFind) {
