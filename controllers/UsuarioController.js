@@ -63,6 +63,7 @@ module.exports = class UsuarioController {
       return;
     }
 
+    // Verifica se o usuario ja existe
     let userFind = await Usuario.findOne({ where: { email: req.body.email } });
 
     if (userFind) {
@@ -70,6 +71,30 @@ module.exports = class UsuarioController {
         message: `Este email ja esta cadastrador, por favor use outro email!`
       });
       return;
+    }
+
+    // Criacao da senha
+    const salt = await bcrypt.genSalt(12);
+    const passwordHash = await bcrypt.hash(senha, salt);
+
+    // Criacao do usuario
+    const user = new Usuario({
+      nome,
+      sobrenome,
+      email,
+      celular,
+      senha: passwordHash,
+      empreendedor
+    });
+
+    try {
+      const newUser = await user.save();
+      res.status(201).json({
+        message: 'Usuario criado!',
+        newUser
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
     }
 
     await Usuario.create(usuarioCriado);
