@@ -1,11 +1,12 @@
 const Usuario = require('../models/Usuario');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
+// Helpers
+const createUserToken = require('../helpers/createUserToken');
+const getToken = require('../helpers/getToken');
 module.exports = class UsuarioController {
-  static cadastraUsuario(req, res) {
-    res.render('usuario/cadastro');
-  }
-
-  static async usuarioCadastrado(req, res) {
+  static async cadastro(req, res) {
     const {
       nome,
       sobrenome,
@@ -15,18 +16,6 @@ module.exports = class UsuarioController {
       confirmarSenha,
       empreendedor
     } = req.body;
-
-    const validateEmpreendedor = empreendedor == 'on' ? true : false;
-
-    const usuarioCriado = {
-      nome,
-      sobrenome,
-      email,
-      celular,
-      senha,
-      confirmarSenha,
-      empreendedor: validateEmpreendedor
-    };
 
     // Validacoes
     if (!nome || nome === ' ') {
@@ -63,42 +52,87 @@ module.exports = class UsuarioController {
       return;
     }
 
-    // Verifica se o usuario ja existe
-    let userFind = await Usuario.findOne({ where: { email: req.body.email } });
+    // Verificando se o usuario existe
+    const userExist = await Usuario.findOne({ email: email });
 
-    if (userFind) {
+    if (userExist) {
       res.status(422).json({
-        message: `Este email ja esta cadastrador, por favor use outro email!`
+        message: `Usuario ja cadastrado com este emai, utilize outro!`
       });
       return;
     }
 
-    // Criacao da senha
+    // Criando uma senha
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(senha, salt);
 
-    // Criacao do usuario
-    const user = new Usuario({
-      nome,
-      sobrenome,
-      email,
-      celular,
+    const usuario = new Usuario({
+      nome: nome,
+      sobrenome: sobrenome,
+      email: email,
+      celular: celular,
       senha: passwordHash,
-      empreendedor
+      empreendedor: empreendedor
     });
 
     try {
-      const newUser = await user.save();
-      res.status(201).json({
-        message: 'Usuario criado!',
-        newUser
-      });
+      const newUser = await usuario.save();
+
+      await createUserToken(newUser, req, res);
     } catch (error) {
       res.status(500).json({ message: error });
     }
+  }
 
-    await Usuario.create(usuarioCriado);
+  static async login(req, res) {
+    const { email, senha } = req.body;
 
-    res.redirect('/');
+    if (!email) {
+      res.status(422).json({ message: 'O email e obrigatorio' });
+      return;
+    }
+    if (!senha) {
+      res.status(422).json({ message: 'A senha e obrigatoria' });
+      return;
+    }
+
+    // Verificando se o usuario existe
+    const user = await Usuario.findOne({ email: email });
+
+    if (!user) {
+      res.status(422).json({
+        message: `Nenhum usuario cadastrado com este email`
+      });
+      return;
+    }
+
+    // check if password match with db password
+    const checkPassword = await bcrypt.compare(senha, user.senha);
+
+    if (!checkPassword) {
+      res.status(422).json({
+        message: 'Senha invalida'
+      });
+      return;
+    }
+
+    await createUserToken(user, req, res);
+  }
+
+  static async checkUser(req, res) {
+    let currentUser;
+
+    if (req.headers.authorization) {
+      const token = getToken(req);
+      const decoded = jwt.verify(token, 'nossoscret');
+
+      currentUser = await Usuario.findById(decoded.id);
+
+      currentUser.senha = undefined;
+    } else {
+      currentUser = null;
+    }
+
+    res.status(200).send(currentUser);
   }
 };
