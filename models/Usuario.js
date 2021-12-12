@@ -34,6 +34,11 @@ const Usuario = db.define('Usuario', {
     allowNull: false,
     required: true
   },
+  confirmarSenha: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    required: true
+  },
   empreendedor: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
