@@ -73,6 +73,9 @@ module.exports = class UsuarioController {
       return;
     }
 
+    // Criacao da senha
+    const salt = await bcrypt.genSalt(12);
+
     await Usuario.create(usuarioCriado);
 
     res.redirect('/');
