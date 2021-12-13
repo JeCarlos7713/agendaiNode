@@ -21,7 +21,6 @@ app.use(express.static('public'));
 // Cors
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
-
 // routes
 const cadastroUsuarioRoutes = require('./routes/cadastroUsuarioRoutes');
 

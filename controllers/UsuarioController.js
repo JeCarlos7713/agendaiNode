@@ -135,4 +135,19 @@ module.exports = class UsuarioController {
 
     res.status(200).send(currentUser);
   }
+
+  static async getUserById(req, res) {
+    const id = req.params.id;
+
+    const user = await Usuario.findById(id).select('-senha');
+
+    if (!user) {
+      res.status(422).json({
+        message: 'Usuario invalido'
+      });
+      return;
+    }
+
+    res.status(200).json({ user });
+  }
 };
