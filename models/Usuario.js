@@ -13,7 +13,8 @@ const Usuario = mongoose.model(
       celular: { type: Number, require: true },
       senha: { type: String, require: true },
       confirmarSenha: { type: String, require: true },
-      empreendedor: { type: Boolean }
+      empreendedor: { type: Boolean },
+      image: { type: String }
     },
     { timestamps: true }
   )

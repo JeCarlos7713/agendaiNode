@@ -22,7 +22,7 @@ app.use(express.static('public'));
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 // routes
-const cadastroUsuarioRoutes = require('./routes/cadastroUsuarioRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
 
 // receber resposta do body
 app.use(
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
-app.use('/usuario', cadastroUsuarioRoutes);
+app.use('/usuario', usuarioRoutes);
 
 app.listen(port, () =>
   console.log(`servidor iniciado: http://localhost:${port}`)

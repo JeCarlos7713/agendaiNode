@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 // Helpers
 const createUserToken = require('../helpers/createUserToken');
 const getToken = require('../helpers/getToken');
+const getUserByToken = require('../helpers/getUserByToken');
 module.exports = class UsuarioController {
   static async cadastro(req, res) {
     const {
@@ -124,7 +125,7 @@ module.exports = class UsuarioController {
 
     if (req.headers.authorization) {
       const token = getToken(req);
-      const decoded = jwt.verify(token, 'nossoscret');
+      const decoded = jwt.verify(token, 'nossosecret');
 
       currentUser = await Usuario.findById(decoded.id);
 
@@ -147,7 +148,99 @@ module.exports = class UsuarioController {
       });
       return;
     }
-
     res.status(200).json({ user });
+  }
+
+  static async editUser(req, res) {
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    if (!user) {
+      res.status(422).json({
+        message: 'Usuario nao encontrado'
+      });
+      return;
+    }
+
+    let image = '';
+
+    if (req.file) {
+      user.image = req.file.filename;
+    }
+
+    const {
+      nome,
+      sobrenome,
+      email,
+      celular,
+      senha,
+      confirmarSenha,
+      empreendedor
+    } = req.body;
+
+    // Validations
+    if (!nome || nome === ' ') {
+      res.status(422).json({ message: `O nome e obrigatorio` });
+      return;
+    }
+
+    user.nome = nome;
+
+    if (!sobrenome || sobrenome === ' ') {
+      res.status(422).json({ message: `O sobrenome e obrigatorio` });
+      return;
+    }
+
+    user.sobrenome = sobrenome;
+
+    if (!email) {
+      res.status(422).json({ message: 'O e-mail é obrigatório!' });
+      return;
+    }
+
+    // Check if user exists
+    const userExists = await Usuario.findOne({ email: email });
+
+    if (user.email !== email && userExists) {
+      res.status(422).json({
+        message: 'Por favo, utilize outro email!'
+      });
+      return;
+    }
+
+    user.email = email;
+
+    if (!celular || celular === ' ') {
+      res.status(422).json({ message: `O celular e obrigatorio` });
+      return;
+    }
+
+    user.celular = celular;
+
+    if (senha !== confirmarSenha) {
+      res.status(422).json({ message: 'As senhas nao conferem' });
+      return;
+    } else if (senha === confirmarSenha && senha != null) {
+      // Creating password
+      const salt = await bcrypt.genSalt(12);
+      const passwordHash = await bcrypt.hash(senha, salt);
+
+      user.senha = passwordHash;
+    }
+    console.log(user);
+
+    try {
+      // return user update data
+      await Usuario.findOneAndUpdate(
+        { _id: user._id },
+        { $set: user },
+        { new: true }
+      );
+
+      res.status(200).json({ message: 'Usuario atualizado!' });
+    } catch (err) {
+      res.status(500).json({ message: err });
+      return;
+    }
   }
 };
